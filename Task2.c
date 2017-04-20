@@ -75,40 +75,32 @@ void delete(struct list *listA, int i){
 int getVal(struct list* listA){
 	struct node* p;
 	int i, sum, exp;
+	sum = 0;
+	exp = 1;
 	p = listA->head->next;
-	i = 0;
 	while(p != NIL){
-		exp = (int)pow(10,i);
-		sum += (p->val)*exp;
+		sum = sum+((p->val)*exp);
 		p = p->next;
-		i++;
+		exp = exp*10;
 	}
 	return sum;
 }
 struct list* addTwoLists (struct list* numA, struct list* numB){
 	int a = getVal(numA);
 	int b = getVal(numB);
-	int sum =  a+b ;
-	int nDigits, digit, exp;
-	int rem = sum;
-	int i = 1;
+	int sum = a+b;
 	struct list* result = init();
 	
 	if (sum == 0){
 		append(result, 0);
 		return result;
 	}else{
-		//get length of sum (i.e. 365 -> 3, 1 -> 1)
-		nDigits = floor(log10(abs(sum))) + 1;
-		printf("%d", sum);
-		while (rem != 0){
-			exp = pow(10,i);
-			digit = rem%exp;
-			rem = rem - digit;
-//			printf("\n%d,%d,%d", rem, digit, exp);
-			append(result, digit/pow(10, i-1));
-			i++;
+		while (sum > 0) {
+			int	digit = sum % 10;
+			append(result, digit);
+			sum = sum/10;
 		}
+		return result;
 	}
 }
 

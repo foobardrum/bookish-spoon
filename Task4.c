@@ -42,9 +42,9 @@ void print(struct queue* q){
 		printf("\nQueue is empty!\n");
 	}else{
 		int i=0;
-		printf("Queue: [ ");
-		while(q->head+i != q->tail){
-			printf("%d ",q->arr[q->head+i]);
+		printf("Stack: [ ");
+		while(((q->head)+i)%16 != q->tail){
+			printf("%d ",q->arr[(q->head+i)%16]);
 			i += 1;
 		}
 		printf("] \n");
@@ -53,12 +53,12 @@ void print(struct queue* q){
 
 int main(){
 	struct queue* q1 = init();
+
 	enqueue(q1,4);
 	enqueue(q1,7);
 	enqueue(q1,1);
 	enqueue(q1,2);
-	enqueue(q1,1);
-	
+
 	print(q1);
 	
 	printf("Dequeued: %d\n",dequeue(q1));

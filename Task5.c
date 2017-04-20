@@ -49,8 +49,8 @@ void print(struct queue* q){
 	}else{
 		int i=0;
 		printf("Stack: [ ");
-		while(q->head+i != q->tail){
-			printf("%d ",q->arr[q->head+i]);
+		while(((q->head)+i)%16 != q->tail){
+			printf("%d ",q->arr[(q->head+i)%16]);
 			i += 1;
 		}
 		printf("] \n");
@@ -67,6 +67,7 @@ void swap(struct stack *s){
 	s->q2 = t;
 }
 void push(struct stack* s, int val){
+//	printf("Q1\nHead:%d\nTail:%d\n\nQ2\nHead:%d\nTail:%d\n\n",s->q1->head,s->q1->tail,s->q2->head,s->q2->tail);
 	enqueue(s->q1, val);
 	while (!isempty(s->q2)){
 		enqueue(s->q1, dequeue(s->q2));
@@ -84,6 +85,7 @@ void printStack(struct stack* s){
 int main(){
 	struct stack* s1 = initStack();
 	push(s1,8);
+//	printf("Q1\nHead:%d\nTail:%d\n\nQ2\nHead:%d\nTail:%d\n\n",s1->q1->head,s1->q1->tail,s1->q2->head,s1->q2->tail);
 	push(s1,9);
 	push(s1,12);
 	push(s1,3);
@@ -100,12 +102,14 @@ int main(){
 	push(s1,2);
 	push(s1,5);
 	push(s1,13);
+	push(s1,14);
+//	printf("%d", s1->q2->arr[s1->q2->tail-1]);
 	printStack(s1);
 //	printf("Head: %d, Tail: %d\n", s1->q2->head, s1->q2->tail);
-	push(s1,14);
+
 //	printf("Head: %d, Tail: %d", s1->q2->head, s1->q2->tail);
 //	printf("Popped: %d\n",pop(s1));	
-	printStack(s1);
+//	printStack(s1);
 //	print(s1->q2);
 
 
