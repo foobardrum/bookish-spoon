@@ -1,97 +1,79 @@
-// Tobias Egger, 16-728-016
-
+//Maximilian Böker ; 16-706-137
 #include <stdio.h>
 #include <stdlib.h>
-
 #define NIL 0
+
+struct list {
+struct node* head;
+};
 
 struct node {
 	int val;
 	struct node* next;
 };
 
-struct list {
-	struct node* head;
-};
-
 struct list* init(){
 	struct list* root;
-	struct node* p;
 	root = malloc(sizeof(struct list));
-	// use Head as a guard knot
-	root->head = malloc(sizeof(struct list));
+	root->head = malloc(sizeof(struct node));
 	root->head->next = NIL;
-	return root;	
+	return root;
 }
+
 void append(struct list *listA, int val){
-	struct node* p;
-	p = listA->head;
-	while (p->next != NIL){
+	struct node* p = listA->head;
+	while(p->next != NIL){
 		p = p->next;
 	}
 	p->next = malloc(sizeof(struct node));
+	p->next->val = val;
 	p = p->next;
-	p->val = val;
 	p->next = NIL;
 }
-void print(struct list *listA){
-	struct node* p;
-	p = listA->head->next;
-	printf("[ ");
-	while (p != NIL){
+
+void print(struct list* listA){
+	struct node* p = listA->head->next;
+	while(p != NIL){
 		printf("%d ", p->val);
 		p = p->next;
 	}
-	printf("]\n");
+	printf("\n");
 }
 
-void delete(struct list *listA, int i){
-	int j;
-	struct node* p;
-	struct node*q;
-	if (i == 0){
-		q = listA->head->next->next;
-		free(listA->head->next);
-		listA->head->next = q;
-	}else{
-		p = listA->head->next;
-		j = 0;
-		while (p->next->next != NIL && j<i-1){
-			p = p->next;
-			j++;
-		}
-		if (p->next->next == NIL){
-			free(p->next);
-			p->next = NIL; 
-		}else{
-			q = p->next->next;
-			free(p->next);
-			p->next = q;
-		}
+void delete(struct list* listA, int i){
+	struct node* p = listA->head;
+	while(i!=0){
+		p = p->next;
+		i--;
 	}
-	
+	if(p->next->next == NIL){
+		free(p->next);
+		p->next = NIL;
+	}
+	else{
+		struct node* tmp = p->next;
+		p->next = tmp->next;
+		free(tmp);
+	}	
 }
 
 int main(){
-	struct list* list1 = init();
+	struct list* l1 = init();
+	append(l1, 9);
+	append(l1, 4);
+	append(l1, 5);
+	append(l1, 3);
+	append(l1, 1);
+	append(l1, 2);
+	append(l1, 0);
 	
-	append(list1, 9);
-	append(list1, 4);
-	append(list1, 5);
-	append(list1, 3);
-	append(list1, 1);
-	append(list1, 2);
-	append(list1, 0);
+	print(l1);
 	
-	print(list1);
+	delete(l1,6);
+	delete(l1,3);
+	delete(l1,0);
 	
-	delete(list1,6);
-	delete(list1,3);
-	delete(list1,0);
-	
-	print(list1);
-	
+	print(l1);
+
 	return 0;
 }
-
-
