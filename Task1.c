@@ -19,7 +19,7 @@ struct list* init(){
 	struct node* p;
 	root = malloc(sizeof(struct list));
 	// use Head as a guard knot
-	root->head = malloc(sizeof(struct list));
+	root->head = malloc(sizeof(struct node));
 	root->head->next = NIL;
 	return root;	
 }
@@ -46,30 +46,19 @@ void print(struct list *listA){
 }
 
 void delete(struct list *listA, int i){
-	int j;
-	struct node* p;
-	struct node*q;
-	if (i == 0){
-		q = listA->head->next->next;
-		free(listA->head->next);
-		listA->head->next = q;
-	}else{
-		p = listA->head->next;
-		j = 0;
-		while (p->next->next != NIL && j<i-1){
-			p = p->next;
-			j++;
-		}
-		if (p->next->next == NIL){
-			free(p->next);
-			p->next = NIL; 
-		}else{
-			q = p->next->next;
-			free(p->next);
-			p->next = q;
-		}
+	struct node* p = listA->head;
+	while(i!=0){
+		p = p->next;
+		i--;
 	}
-	
+	if (p->next->next == NIL){
+		free(p->next);
+		p->next = NIL;
+	}else{
+		struct node* q = p->next;
+		p->next = q->next;
+		free(q);
+	}
 }
 
 int main(){

@@ -20,7 +20,7 @@ struct list* init(){
 	struct node* p;
 	root = malloc(sizeof(struct list));
 	// use Head as a guard knot
-	root->head = malloc(sizeof(struct list));
+	root->head = malloc(sizeof(struct node));
 	root->head->next = NIL;
 	return root;	
 }
