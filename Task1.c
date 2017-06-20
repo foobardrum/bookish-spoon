@@ -12,6 +12,7 @@ struct node {
 
 struct list {
 	struct node* head;
+  
 };
 
 struct list* init(){
@@ -21,7 +22,7 @@ struct list* init(){
 	// use Head as a guard knot
 	root->head = malloc(sizeof(struct node));
 	root->head->next = NIL;
-	return root;	
+	return root;
 }
 void append(struct list *listA, int val){
 	struct node* p;
@@ -63,7 +64,7 @@ void delete(struct list *listA, int i){
 
 int main(){
 	struct list* list1 = init();
-	
+
 	append(list1, 9);
 	append(list1, 4);
 	append(list1, 5);
@@ -71,16 +72,14 @@ int main(){
 	append(list1, 1);
 	append(list1, 2);
 	append(list1, 0);
-	
+
 	print(list1);
-	
+
 	delete(list1,6);
 	delete(list1,3);
 	delete(list1,0);
-	
+
 	print(list1);
-	
+
 	return 0;
 }
-
-
